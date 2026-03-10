@@ -1,23 +1,32 @@
 import { Text, TouchableOpacity, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '@/routes';
 import { colors } from '@/constants/colors';
 import { styles } from './styles';
 
 export type BottomNavTab = 'home' | 'meta' | 'alimentos' | 'dieta';
 
-const TABS: { id: BottomNavTab; label: string; icon: 'home' | 'calculator' | 'magnify' | 'food' }[] = [
-  { id: 'home', label: 'Início', icon: 'home' },
-  { id: 'meta', label: 'Meta', icon: 'calculator' },
-  { id: 'alimentos', label: 'Alimentos', icon: 'magnify' },
-  { id: 'dieta', label: 'Dieta', icon: 'food' },
+const TABS: {
+  id: BottomNavTab;
+  label: string;
+  icon: 'home' | 'calculator' | 'magnify' | 'food';
+  route: keyof RootStackParamList;
+}[] = [
+  { id: 'home', label: 'Início', icon: 'home', route: 'Home' },
+  { id: 'meta', label: 'Meta', icon: 'calculator', route: 'Meta' },
+  { id: 'alimentos', label: 'Alimentos', icon: 'magnify', route: 'Alimentos' },
+  { id: 'dieta', label: 'Dieta', icon: 'food', route: 'Dieta' },
 ];
 
 type BottomNavProps = {
   activeTab: BottomNavTab;
-  onTabPress?: (tab: BottomNavTab) => void;
 };
 
-export function BottomNav({ activeTab, onTabPress }: BottomNavProps) {
+export function BottomNav({ activeTab }: BottomNavProps) {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   return (
     <View style={styles.container}>
       {TABS.map((tab) => {
@@ -26,7 +35,7 @@ export function BottomNav({ activeTab, onTabPress }: BottomNavProps) {
           <TouchableOpacity
             key={tab.id}
             style={[styles.item, isActive ? styles.itemActive : styles.itemInactive]}
-            onPress={() => onTabPress?.(tab.id)}
+            onPress={() => !isActive && navigation.navigate(tab.route)}
             activeOpacity={0.7}
           >
             <MaterialCommunityIcons
