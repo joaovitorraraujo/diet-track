@@ -1,14 +1,19 @@
 import { Image, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { styles } from './styles';
-import { Input } from '../../components/Input';
-import { Button } from '../../components/Button';
+import { Input } from '@/components/Input';
+import { Button } from '@/components/Button';
+import type { RootStackParamList } from '@/routes';
 
 const backgroundImage = require('@/assets/background-food.jpg');
 const logoImage = require('@/assets/diet-track-logo.png');
 
 export function Login() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
       <StatusBar style="light" />
@@ -23,7 +28,7 @@ export function Login() {
             <TouchableOpacity style={styles.tabActive}>
               <Text style={styles.tabActiveText}>Entrar</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.tabInactive}>
+            <TouchableOpacity style={styles.tabInactive} onPress={() => navigation.navigate('Register')}>
               <Text style={styles.tabInactiveText}>Cadastre-se</Text>
             </TouchableOpacity>
           </View>
@@ -35,7 +40,7 @@ export function Login() {
           <Input placeholder="Seu email" iconName="email-outline" />
           <Input placeholder="Sua senha" iconName="lock-outline" secureTextEntry />
 
-          <Button title="Entrar" variant="primary" />
+          <Button title="Entrar" variant="primary" onPress={() => navigation.navigate('Home')}/>
 
           <Text style={styles.orText}>Ou entre com</Text>
 

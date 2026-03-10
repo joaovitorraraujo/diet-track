@@ -1,14 +1,19 @@
 import { Image, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { styles } from './styles';
 import { Input } from '@/components/Input';
 import { Button } from '@/components/Button';
+import type { RootStackParamList } from '@/routes';
 
 const backgroundImage = require('@/assets/background-food.jpg');
 const logoImage = require('@/assets/diet-track-logo.png');
 
 export function Register() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
       <StatusBar style="light" />
@@ -20,7 +25,7 @@ export function Register() {
 
         <View style={styles.card}>
           <View style={styles.tabContainer}>
-            <TouchableOpacity style={styles.tabInactive}>
+            <TouchableOpacity style={styles.tabInactive} onPress={() => navigation.navigate('Login')}>
               <Text style={styles.tabInactiveText}>Entrar</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.tabActive}>

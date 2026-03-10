@@ -1,7 +1,7 @@
 import { TextInput, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from './styles';
-import { colors } from '../../constants/colors';
+import { colors } from '@/constants/colors';
 
 type IconName = React.ComponentProps<typeof MaterialCommunityIcons>['name'];
 
