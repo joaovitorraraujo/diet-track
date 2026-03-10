@@ -12,4 +12,6 @@ export const colors = {
   primaryText: '#436927',
   white: '#ffffff',
   black: '#000000',
+  error: '#c0392b',
+  errorLight: '#fdf0ef',
 };

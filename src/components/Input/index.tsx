@@ -1,4 +1,4 @@
-import { TextInput, View } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { colors } from '@/constants/colors';
@@ -9,24 +9,33 @@ type InputProps = {
   placeholder?: string;
   iconName: IconName;
   secureTextEntry?: boolean;
+  value?: string;
+  onChangeText?: (text: string) => void;
+  error?: string;
 };
 
-export function Input({ placeholder, iconName, secureTextEntry = false }: InputProps) {
+export function Input({ placeholder, iconName, secureTextEntry = false, value, onChangeText, error }: InputProps) {
   return (
-    <View style={styles.container}>
-      <MaterialCommunityIcons
-        name={iconName}
-        size={24}
-        color={colors.textMuted}
-        style={styles.icon}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder={placeholder}
-        placeholderTextColor={colors.textMuted}
-        secureTextEntry={secureTextEntry}
-        editable={true}
-      />
+    <View style={styles.wrapper}>
+      <View style={[styles.container, !!error && styles.containerError]}>
+        <MaterialCommunityIcons
+          name={iconName}
+          size={24}
+          color={error ? colors.error : colors.textMuted}
+          style={styles.icon}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder={placeholder}
+          placeholderTextColor={colors.textMuted}
+          secureTextEntry={secureTextEntry}
+          editable={true}
+          value={value}
+          onChangeText={onChangeText}
+          autoCapitalize="none"
+        />
+      </View>
+      {!!error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 }
