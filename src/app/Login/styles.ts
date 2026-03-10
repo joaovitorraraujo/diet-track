@@ -70,6 +70,7 @@ export const styles = StyleSheet.create({
     color: colors.textMuted,
   },
   subtitle: {
+    textAlign: 'center',
     fontSize: 14,
     color: colors.textMuted,
     marginBottom: 20,
