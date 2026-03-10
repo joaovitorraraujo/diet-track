@@ -9,6 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { BottomNav } from '@/components/BottomNav';
 import { styles } from './styles';
 import { colors } from '@/constants/colors';
 
@@ -145,24 +146,7 @@ export function Home() {
           </ScrollView>
         </View>
 
-        <View style={styles.bottomNav}>
-          <TouchableOpacity style={[styles.bottomNavItem, styles.bottomNavItemActive]}>
-            <MaterialCommunityIcons name="home" size={30} color={colors.primary} />
-            <Text style={[styles.bottomNavLabel, styles.bottomNavLabelActive]}>Início</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.bottomNavItem, styles.bottomNavItemInactive]}>
-            <MaterialCommunityIcons name="calculator" size={30} color={colors.textDark} />
-            <Text style={[styles.bottomNavLabel, styles.bottomNavLabelInactive]}>Meta</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.bottomNavItem, styles.bottomNavItemInactive]}>
-            <MaterialCommunityIcons name="magnify" size={30} color={colors.textDark} />
-            <Text style={[styles.bottomNavLabel, styles.bottomNavLabelInactive]}>Alimentos</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.bottomNavItem, styles.bottomNavItemInactive]}>
-            <MaterialCommunityIcons name="food" size={30} color={colors.textDark} />
-            <Text style={[styles.bottomNavLabel, styles.bottomNavLabelInactive]}>Dieta</Text>
-          </TouchableOpacity>
-        </View>
+        <BottomNav activeTab="home" />
       </SafeAreaView>
     </ImageBackground>
   );

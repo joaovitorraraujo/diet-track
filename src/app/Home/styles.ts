@@ -151,43 +151,4 @@ export const styles = StyleSheet.create({
   mealCardCheckPending: {
     backgroundColor: colors.inputBackgroundAlt,
   },
-  bottomNav: {
-    position: 'absolute',
-    bottom: 24,
-    left: 24,
-    right: 24,
-    flexDirection: 'row',
-    backgroundColor: colors.cardBackground,
-    borderRadius: 20,
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    shadowColor: colors.black,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.3,
-    shadowRadius: 9.7,
-    elevation: 8,
-  },
-  bottomNavItem: {
-    alignItems: 'center',
-    flex: 1,
-  },
-  bottomNavItemActive: {
-    opacity: 1,
-  },
-  bottomNavItemInactive: {
-    opacity: 0.6,
-  },
-  bottomNavLabel: {
-    fontSize: 15,
-    fontWeight: '500',
-    marginTop: 4,
-  },
-  bottomNavLabelActive: {
-    color: colors.primaryText,
-  },
-  bottomNavLabelInactive: {
-    color: colors.textDark,
-  },
 });
