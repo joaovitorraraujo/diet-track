@@ -1,5 +1,6 @@
 export const colors = {
   primary: '#446a27',
+  primaryLight: '#d0e9d8',
   overlay: '#233c30',
   cardBackground: '#f6f9f7',
   inputBackground: '#f1f1f1',
@@ -7,6 +8,8 @@ export const colors = {
   inputBorder: '#cfcfcf',
   textDark: '#000000',
   textMuted: 'rgba(0,0,0,0.5)',
+  textSecondary: '#717171',
+  primaryText: '#436927',
   white: '#ffffff',
   black: '#000000',
 };

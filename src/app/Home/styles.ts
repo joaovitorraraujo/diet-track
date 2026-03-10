@@ -1,15 +1,193 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
+import { colors } from '@/constants/colors';
 
 export const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    backgroundColor: '#000000',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: colors.overlay,
+    opacity: 0.59,
+  },
+  safeArea: {
+    flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    paddingHorizontal: 24,
+    paddingTop: 8,
+    paddingBottom: 16,
+  },
+  headerLeft: {
+    flex: 1,
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: colors.white,
+    textShadowColor: colors.black,
+    textShadowOffset: { width: 4, height: 2 },
+    textShadowRadius: 20,
+  },
+  headerDate: {
+    fontSize: 15,
+    color: colors.white,
+    marginTop: 4,
+    textShadowColor: colors.black,
+    textShadowOffset: { width: 4, height: 1 },
+    textShadowRadius: 10,
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  headerLogoText: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: colors.white,
+    textShadowColor: colors.black,
+    textShadowOffset: { width: 4, height: 7 },
+    textShadowRadius: 10,
+  },
+  goalCard: {
+    marginHorizontal: 24,
+    opacity: 0.9,
+    marginBottom: 24,
+    backgroundColor: colors.cardBackground,
+    borderRadius: 24,
+    padding: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 21.3,
+    elevation: 8,
+  },
+  goalCardIconContainer:{
+    backgroundColor: colors.white,
+    borderRadius: 100,
+    padding: 12,
+    marginRight: 16,
+  },
+  goalCardContent: {
+    flex: 1,
+  },
+  goalCardTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: colors.textDark,
+  },
+  goalCardSubtitle: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginTop: 4,
+  },
+  mainCard: {
+    flex: 1,
+    backgroundColor: colors.cardBackground,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 100,
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: -24 },
+    shadowOpacity: 1,
+    shadowRadius: 1,
+    elevation: 24,
+    opacity: 0.9,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: colors.textDark,
+    marginBottom: 16,
+    marginLeft: 14,
+  },
+  mealCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.cardBackground,
+    borderRadius: 24,
+    padding: 16,
+    marginBottom: 16,
+    elevation: 1,
+  },
+  mealCardCompleted: {
+    backgroundColor: colors.primaryLight,
+    borderWidth: 1,
+    borderColor: colors.primary,
+    opacity: 0.8,
+  },
+  mealCardIcon: {
+    marginRight: 16,
+  },
+  mealCardContent: {
+    flex: 1,
+  },
+  mealCardTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: colors.textDark,
+  },
+  mealCardSubtitle: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginTop: 4,
+  },
+  mealCardCheck: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    color: '#ffffff',
-    fontSize: 20,
-    fontWeight: 'bold',
+  mealCardCheckPending: {
+    backgroundColor: colors.inputBackgroundAlt,
+  },
+  bottomNav: {
+    position: 'absolute',
+    bottom: 24,
+    left: 24,
+    right: 24,
+    flexDirection: 'row',
+    backgroundColor: colors.cardBackground,
+    borderRadius: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.3,
+    shadowRadius: 9.7,
+    elevation: 8,
+  },
+  bottomNavItem: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  bottomNavItemActive: {
+    opacity: 1,
+  },
+  bottomNavItemInactive: {
+    opacity: 0.6,
+  },
+  bottomNavLabel: {
+    fontSize: 15,
+    fontWeight: '500',
+    marginTop: 4,
+  },
+  bottomNavLabelActive: {
+    color: colors.primaryText,
+  },
+  bottomNavLabelInactive: {
+    color: colors.textDark,
   },
 });
