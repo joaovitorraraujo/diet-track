@@ -1,18 +1,94 @@
-import { ImageBackground, Text, View } from 'react-native';
+import { useMemo, useState } from 'react';
+import { FlatList, Image, ImageBackground, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { AlimentoCard } from '@/components/AlimentoCard';
+import type { Alimento } from '@/components/AlimentoCard';
+import { colors } from '@/constants/colors';
 import { styles } from './styles';
 
 const backgroundImage = require('@/assets/background-food.jpg');
+const logoImage = require('@/assets/diet-track-logo.png');
+
+const ALIMENTOS: Alimento[] = [
+  { id: '1', nome: 'Frango (peito)', proteinaPor100g: 31, categoria: 'Carnes' },
+  { id: '2', nome: 'Carne bovina (patinho)', proteinaPor100g: 26, categoria: 'Carnes' },
+  { id: '3', nome: 'Peixe', proteinaPor100g: 26, categoria: 'Carnes' },
+];
 
 export function Alimentos() {
+  const [search, setSearch] = useState('');
+  const [expandedId, setExpandedId] = useState<string | null>('1');
+
+  const filteredAlimentos = useMemo(() => {
+    if (!search.trim()) return ALIMENTOS;
+    const lower = search.toLowerCase();
+    return ALIMENTOS.filter((a) => a.nome.toLowerCase().includes(lower));
+  }, [search]);
+
+  function handleToggle(id: string) {
+    setExpandedId((prev) => (prev === id ? null : id));
+  }
+
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
       <StatusBar style="light" />
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea} edges={['top']}>
-        <Text style={styles.title}>Alimentos</Text>
-        <Text style={styles.subtitle}>Em breve poderás pesquisar e registar alimentos.</Text>
+        <View style={styles.header}>
+          <View style={styles.headerLeft}>
+            <Text style={styles.headerTitle}>Proteínas por Alimento</Text>
+            <Text style={styles.headerSubtitle}>Calcule a proteína de cada alimento</Text>
+          </View>
+          <View style={styles.headerRight}>
+            <Image source={logoImage} style={{ width: 100, height: 40 }} resizeMode="contain" />
+          </View>
+        </View>
+
+        <View style={styles.searchContainer}>
+          <MaterialCommunityIcons
+            name="magnify"
+            size={28}
+            color={colors.textMuted}
+            style={styles.searchIcon}
+          />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Buscar alimento..."
+            placeholderTextColor={colors.textMuted}
+            value={search}
+            onChangeText={setSearch}
+            returnKeyType="search"
+            autoCapitalize="none"
+          />
+        </View>
+
+        <View style={styles.mainCard}>
+          <FlatList
+            data={filteredAlimentos}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.listContent}
+            ListHeaderComponent={
+              filteredAlimentos.length > 0 ? (
+                <Text style={styles.categoryLabel}>
+                  {filteredAlimentos[0].categoria}
+                </Text>
+              ) : null
+            }
+            renderItem={({ item }) => (
+              <AlimentoCard
+                alimento={item}
+                isExpanded={expandedId === item.id}
+                onToggle={() => handleToggle(item.id)}
+              />
+            )}
+            ListEmptyComponent={
+              <Text style={styles.emptyText}>Nenhum alimento encontrado.</Text>
+            }
+          />
+        </View>
       </SafeAreaView>
     </ImageBackground>
   );
