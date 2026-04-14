@@ -5,7 +5,9 @@ export const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.cardBackground,
     borderRadius: 30,
+    overflow: 'hidden',
     paddingHorizontal: 24,
+    opacity: 0.9,
     paddingVertical: 16,
     marginBottom: 12,
     shadowColor: colors.black,
@@ -60,6 +62,9 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     color: colors.textDark,
+    backgroundColor: 'transparent',
+    paddingVertical: 0,
+    margin: 0,
   },
   gramUnit: {
     fontSize: 16,

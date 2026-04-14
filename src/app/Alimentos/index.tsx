@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { FlatList, Image, ImageBackground, Text, TextInput, View } from 'react-native';
+import { FlatList, Image, ImageBackground, LayoutAnimation, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -36,6 +36,12 @@ export function Alimentos() {
   }, [search]);
 
   function handleToggle(id: string) {
+    LayoutAnimation.configureNext({
+      duration: 300,
+      create: { type: LayoutAnimation.Types.easeInEaseOut, property: LayoutAnimation.Properties.opacity },
+      update: { type: LayoutAnimation.Types.spring, springDamping: 0.7 },
+      delete: { type: LayoutAnimation.Types.easeInEaseOut, property: LayoutAnimation.Properties.opacity },
+    });
     setExpandedId((prev) => (prev === id ? null : id));
   }
 
