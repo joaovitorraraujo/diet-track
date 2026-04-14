@@ -36,7 +36,7 @@ export function Register() {
   });
 
   function onSubmit(_data: RegisterFormData) {
-    navigation.navigate('Home');
+    navigation.navigate('Main');
   }
 
   return (

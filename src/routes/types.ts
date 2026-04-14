@@ -7,14 +7,8 @@ export type MainTabParamList = {
   Dieta: undefined;
 };
 
-export type RootParamList = {
+export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   Main: NavigatorScreenParams<MainTabParamList> | undefined;
 };
-
-declare global {
-  namespace ReactNavigation {
-    interface RootParamList extends RootParamList {}
-  }
-}

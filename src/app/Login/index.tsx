@@ -30,7 +30,7 @@ export function Login() {
   });
 
   function onSubmit(_data: LoginFormData) {
-    navigation.navigate('Home');
+    navigation.navigate('Main');
   }
 
   return (

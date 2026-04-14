@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
-import { BottomNav } from '@/components/BottomNav';
 import { colors } from '@/constants/colors';
 import { styles } from './styles';
 
@@ -108,8 +107,6 @@ export function Meta() {
             </View>
           </ScrollView>
         </View>
-
-        <BottomNav activeTab="meta" />
       </SafeAreaView>
     </ImageBackground>
   );
