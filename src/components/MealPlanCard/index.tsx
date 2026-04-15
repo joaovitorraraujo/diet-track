@@ -1,6 +1,8 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Animated, Text, TouchableOpacity, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '@/constants/colors';
+import type { MealItem } from '@/types/diet';
 import { styles } from './styles';
 
 type IconName = React.ComponentProps<typeof MaterialCommunityIcons>['name'];
@@ -9,26 +11,105 @@ type MealPlanCardProps = {
   title: string;
   icon: IconName;
   kcal: number;
-  onAddPress: () => void;
+  proteina: number;
+  items: MealItem[];
+  onAddCarb: () => void;
+  onAddProtein: () => void;
+  onDeleteItem: (id: string) => void;
 };
 
-export function MealPlanCard({ title, icon, kcal, onAddPress }: MealPlanCardProps) {
+export function MealPlanCard({
+  title,
+  icon,
+  kcal,
+  proteina,
+  items,
+  onAddCarb,
+  onAddProtein,
+  onDeleteItem,
+}: MealPlanCardProps) {
+  const [expanded, setExpanded] = useState(false);
+  const rotationAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(rotationAnim, {
+      toValue: expanded ? 1 : 0,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+  }, [expanded]);
+
+  const chevronRotate = rotationAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '180deg'],
+  });
+
+  const hasItems = items.length > 0;
+
   return (
     <View style={styles.card}>
-      <View style={styles.row}>
+      <TouchableOpacity
+        style={styles.header}
+        onPress={() => hasItems && setExpanded((v) => !v)}
+        activeOpacity={hasItems ? 0.7 : 1}
+      >
         <MaterialCommunityIcons name={icon} size={40} color={colors.primary} style={styles.icon} />
         <View style={styles.content}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>
-            {kcal > 0 ? `${kcal} kcal adicionados` : 'Nenhuma refeição adicionada'}
+            {hasItems ? `${items.length} item(s) adicionado(s)` : 'Nenhuma refeição adicionada'}
           </Text>
         </View>
-        {kcal > 0 && <Text style={styles.kcalBadge}>{kcal} kcal</Text>}
-      </View>
-      <TouchableOpacity style={styles.addButton} onPress={onAddPress} activeOpacity={0.7}>
-        <MaterialCommunityIcons name="plus" size={18} color={colors.primary} />
-        <Text style={styles.addText}>Adicionar</Text>
+        <View style={styles.badgesCol}>
+          {kcal > 0 && (
+            <Text style={styles.kcalBadge}>{kcal} kcal</Text>
+          )}
+          {proteina > 0 && (
+            <Text style={[styles.kcalBadge, styles.proteinBadge]}>{proteina}g prot</Text>
+          )}
+        </View>
+        {hasItems && (
+          <Animated.View style={{ transform: [{ rotate: chevronRotate }] }}>
+            <MaterialCommunityIcons name="chevron-down" size={24} color={colors.textMuted} />
+          </Animated.View>
+        )}
       </TouchableOpacity>
+
+      {expanded && hasItems && (
+        <View>
+          <View style={styles.divider} />
+          {items.map((item) => (
+            <View key={item.id} style={styles.itemRow}>
+              <View style={styles.itemInfo}>
+                <Text style={styles.itemName}>{item.alimento}</Text>
+                <Text style={styles.itemMeta}>
+                  {item.gramas}g • {item.kcal} kcal
+                  {item.proteina ? ` • ${item.proteina}g prot` : ''}
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.deleteButton}
+                onPress={() => onDeleteItem(item.id)}
+                activeOpacity={0.7}
+              >
+                <MaterialCommunityIcons name="trash-can-outline" size={20} color={colors.error} />
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
+      )}
+
+      <View style={styles.addRow}>
+        <TouchableOpacity style={styles.addButton} onPress={onAddCarb} activeOpacity={0.7}>
+          <MaterialCommunityIcons name="plus" size={16} color={colors.primary} />
+          <Text style={styles.addText}>Carboidrato</Text>
+        </TouchableOpacity>
+        <View style={styles.addDivider} />
+        <TouchableOpacity style={styles.addButton} onPress={onAddProtein} activeOpacity={0.7}>
+          <MaterialCommunityIcons name="plus" size={16} color={colors.primary} />
+          <Text style={styles.addText}>Proteína</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
