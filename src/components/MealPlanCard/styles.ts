@@ -34,6 +34,16 @@ export const styles = StyleSheet.create({
     color: colors.textSecondary,
     marginTop: 4,
   },
+  kcalBadge: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: colors.primary,
+    backgroundColor: colors.primaryLight,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
   addButton: {
     flexDirection: 'row',
     alignItems: 'center',

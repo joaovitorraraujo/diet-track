@@ -12,6 +12,12 @@ type AddMealModalProps = {
   onConfirm: (alimento: string, gramas: string, kcal: string) => void;
 };
 
+function handleNumericChange(text: string, setter: (v: string) => void, max = 1000) {
+  const clean = text.replace(/[^0-9]/g, '');
+  if (!clean) { setter(''); return; }
+  setter(String(Math.min(parseInt(clean, 10), max)));
+}
+
 export function AddMealModal({ visible, mealTitle, onClose, onConfirm }: AddMealModalProps) {
   const [alimento, setAlimento] = useState('');
   const [gramas, setGramas] = useState('');
@@ -53,13 +59,16 @@ export function AddMealModal({ visible, mealTitle, onClose, onConfirm }: AddMeal
             placeholder="Quantidade (g)"
             iconName="weight-gram"
             value={gramas}
-            onChangeText={setGramas}
+            onChangeText={(text) => handleNumericChange(text, setGramas)}
+            keyboardType="numeric"
+            maxLength={4}
           />
           <Input
             placeholder="Total de kcal"
             iconName="fire"
             value={kcal}
-            onChangeText={setKcal}
+            keyboardType="numeric"
+            maxLength={4}
           />
 
           <Button title="Adicionar" onPress={handleConfirm} />

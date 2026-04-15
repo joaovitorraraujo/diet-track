@@ -19,6 +19,9 @@ const MEALS = [
 export function Dieta() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMeal, setSelectedMeal] = useState<{ id: string; title: string } | null>(null);
+  const [mealKcal, setMealKcal] = useState<Record<string, number>>({});
+
+  const totalKcal = Object.values(mealKcal).reduce((sum, v) => sum + v, 0);
 
   function handleOpenModal(meal: { id: string; title: string }) {
     setSelectedMeal(meal);
@@ -30,7 +33,13 @@ export function Dieta() {
     setSelectedMeal(null);
   }
 
-  function handleConfirm(_alimento: string, _gramas: string, _kcal: string) {
+  function handleConfirm(_alimento: string, _gramas: string, kcal: string) {
+    if (selectedMeal && kcal) {
+      setMealKcal((prev) => ({
+        ...prev,
+        [selectedMeal.id]: (prev[selectedMeal.id] ?? 0) + Number(kcal),
+      }));
+    }
     setModalVisible(false);
     setSelectedMeal(null);
   }
@@ -50,7 +59,7 @@ export function Dieta() {
           <View style={styles.statsDivider} />
           <View style={styles.statsColumn}>
             <Text style={styles.statsLabel}>Total de Kcal</Text>
-            <Text style={styles.statsValue}>3.000</Text>
+            <Text style={styles.statsValue}>{totalKcal}</Text>
           </View>
         </View>
 
@@ -61,6 +70,7 @@ export function Dieta() {
                 key={meal.id}
                 title={meal.title}
                 icon={meal.icon}
+                kcal={mealKcal[meal.id] ?? 0}
                 onAddPress={() => handleOpenModal(meal)}
               />
             ))}

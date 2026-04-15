@@ -12,9 +12,11 @@ type InputProps = {
   value?: string;
   onChangeText?: (text: string) => void;
   error?: string;
+  keyboardType?: React.ComponentProps<typeof TextInput>['keyboardType'];
+  maxLength?: number;
 };
 
-export function Input({ placeholder, iconName, secureTextEntry = false, value, onChangeText, error }: InputProps) {
+export function Input({ placeholder, iconName, secureTextEntry = false, value, onChangeText, error, keyboardType, maxLength }: InputProps) {
   return (
     <View style={styles.wrapper}>
       <View style={[styles.container, !!error && styles.containerError]}>
@@ -33,6 +35,8 @@ export function Input({ placeholder, iconName, secureTextEntry = false, value, o
           value={value}
           onChangeText={onChangeText}
           autoCapitalize="none"
+          keyboardType={keyboardType}
+          maxLength={maxLength}
         />
       </View>
       {!!error && <Text style={styles.errorText}>{error}</Text>}
