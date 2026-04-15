@@ -87,6 +87,10 @@ export function Login() {
 
           <Button title="Entrar" variant="primary" onPress={handleSubmit(onSubmit)} />
 
+          <TouchableOpacity style={styles.forgotButton} activeOpacity={0.7}>
+            <Text style={styles.forgotText}>Esqueci minha senha</Text>
+          </TouchableOpacity>
+
           <Text style={styles.orText}>Ou entre com</Text>
 
           <Button title="Google" variant="google" />

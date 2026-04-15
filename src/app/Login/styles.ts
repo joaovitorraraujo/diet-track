@@ -76,6 +76,15 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 4,
   },
+  forgotButton: {
+    alignSelf: 'center',
+    marginTop: 12,
+  },
+  forgotText: {
+    fontSize: 13,
+    color: colors.primaryText,
+    textDecorationLine: 'underline',
+  },
   orText: {
     textAlign: 'center',
     fontSize: 14,
