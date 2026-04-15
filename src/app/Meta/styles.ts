@@ -100,6 +100,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 4.8,
     elevation: 3,
+    opacity: 0.9,
   },
   sectionCardTitle: {
     fontSize: 20,
