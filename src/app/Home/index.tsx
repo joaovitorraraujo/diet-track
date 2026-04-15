@@ -1,5 +1,4 @@
 import {
-  Image,
   ImageBackground,
   ScrollView,
   Text,
@@ -9,11 +8,11 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ScreenHeader } from '@/components/ScreenHeader';
 import { styles } from './styles';
 import { colors } from '@/constants/colors';
 
 const backgroundImage = require('@/assets/background-food.jpg');
-const logoImage = require('@/assets/diet-track-logo.png');
 
 const MEALS = [
   {
@@ -80,15 +79,7 @@ export function Home() {
       <StatusBar style="light" />
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea} edges={['top']}>
-        <View style={styles.header}>
-          <View style={styles.headerLeft}>
-            <Text style={styles.headerTitle}>Minha Dieta</Text>
-            <Text style={styles.headerDate}>{formatDate()}</Text>
-          </View>
-          <View style={styles.headerRight}>
-            <Image source={logoImage} style={{ width: 100, height: 40 }} resizeMode="contain" />
-          </View>
-        </View>
+        <ScreenHeader title="Minha Dieta" subtitle={formatDate()} />
 
         <TouchableOpacity style={styles.goalCard} activeOpacity={0.8}>
           <View style={styles.goalCardIconContainer}>

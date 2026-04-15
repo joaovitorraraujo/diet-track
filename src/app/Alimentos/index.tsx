@@ -1,15 +1,15 @@
 import { useMemo, useState } from 'react';
-import { FlatList, Image, ImageBackground, LayoutAnimation, Text, TextInput, View } from 'react-native';
+import { FlatList, ImageBackground, LayoutAnimation, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AlimentoCard } from '@/components/AlimentoCard';
 import type { Alimento } from '@/components/AlimentoCard';
+import { ScreenHeader } from '@/components/ScreenHeader';
 import { colors } from '@/constants/colors';
 import { styles } from './styles';
 
 const backgroundImage = require('@/assets/background-food.jpg');
-const logoImage = require('@/assets/diet-track-logo.png');
 
 const ALIMENTOS: Alimento[] = [
   { id: '1', nome: 'Frango (peito)', proteinaPor100g: 31, categoria: 'Carnes' },
@@ -50,15 +50,7 @@ export function Alimentos() {
       <StatusBar style="light" />
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea} edges={['top']}>
-        <View style={styles.header}>
-          <View style={styles.headerLeft}>
-            <Text style={styles.headerTitle}>Proteínas por Alimento</Text>
-            <Text style={styles.headerSubtitle}>Calcule a proteína de cada alimento</Text>
-          </View>
-          <View style={styles.headerRight}>
-            <Image source={logoImage} style={{ width: 100, height: 40 }} resizeMode="contain" />
-          </View>
-        </View>
+        <ScreenHeader title="Proteínas por Alimento" subtitle="Calcule a proteína de cada alimento" />
 
         <View style={styles.searchContainer}>
           <MaterialCommunityIcons

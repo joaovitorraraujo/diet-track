@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Image, ImageBackground, ScrollView, Text, View } from 'react-native';
+import { ImageBackground, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { MealPlanCard } from '@/components/MealPlanCard';
 import { AddMealModal } from '@/components/AddMealModal';
+import { ScreenHeader } from '@/components/ScreenHeader';
 import { styles } from './styles';
 
 const backgroundImage = require('@/assets/background-food.jpg');
-const logoImage = require('@/assets/diet-track-logo.png');
 
 const MEALS = [
   { id: '1', title: 'Café da Manhã', icon: 'weather-sunny' as const },
@@ -40,15 +40,7 @@ export function Dieta() {
       <StatusBar style="light" />
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea} edges={['top']}>
-        <View style={styles.header}>
-          <View style={styles.headerLeft}>
-            <Text style={styles.headerTitle}>Plano Alimentar</Text>
-            <Text style={styles.headerSubtitle}>Crie seu plano alimentar do dia</Text>
-          </View>
-          <View style={styles.headerRight}>
-            <Image source={logoImage} style={{ width: 100, height: 40 }} resizeMode="contain" />
-          </View>
-        </View>
+        <ScreenHeader title="Plano Alimentar" subtitle="Crie seu plano alimentar do dia" />
 
         <View style={styles.statsCard}>
           <View style={styles.statsColumn}>

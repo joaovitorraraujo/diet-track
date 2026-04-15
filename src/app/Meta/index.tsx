@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {
-  Image,
   ImageBackground,
   ScrollView,
   Text,
@@ -10,11 +9,11 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { ScreenHeader } from '@/components/ScreenHeader';
 import { colors } from '@/constants/colors';
 import { styles } from './styles';
 
 const backgroundImage = require('@/assets/background-food.jpg');
-const logoImage = require('@/assets/diet-track-logo.png');
 
 type ActivityLevel = 'sedentario' | 'moderado' | 'intenso';
 
@@ -46,15 +45,7 @@ export function Meta() {
       <StatusBar style="light" />
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea} edges={['top']}>
-        <View style={styles.header}>
-          <View style={styles.headerLeft}>
-            <Text style={styles.headerTitle}>Meta de Proteínas</Text>
-            <Text style={styles.headerSubtitle}>Calcule com base no seu peso e atividade</Text>
-          </View>
-          <View style={styles.headerRight}>
-            <Image source={logoImage} style={{ width: 100, height: 40 }} resizeMode="contain" />
-          </View>
-        </View>
+        <ScreenHeader title="Meta de Proteínas" subtitle="Calcule com base no seu peso e atividade" />
 
         <View style={styles.resultCard}>
           <Text style={styles.resultCardTitle}>Sua meta diária de proteínas</Text>
