@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   ImageBackground,
   ScrollView,
@@ -13,31 +12,11 @@ import { ScreenHeader } from '@/components/layout/ScreenHeader';
 import { colors } from '@/constants/colors';
 import { styles } from './styles';
 import { backgroundImage } from '@/assets';
-
-type ActivityLevel = 'sedentario' | 'moderado' | 'intenso';
-
-const ACTIVITY_OPTIONS: { id: ActivityLevel; label: string; description: string; multiplier: number }[] = [
-  { id: 'sedentario', label: 'Sedentário', description: 'Pouca ou nenhuma atividade • 1.6g/kg', multiplier: 1.6 },
-  { id: 'moderado', label: 'Moderado', description: 'Treina 3-4x por semana • 1.8g/kg', multiplier: 1.8 },
-  { id: 'intenso', label: 'Intenso', description: 'Treina 5-7x por semana • 2g/kg', multiplier: 2.0 },
-];
-
-function computeProtein(weight: string, activity: ActivityLevel): string | null {
-  const kg = parseFloat(weight);
-  if (!kg || kg <= 0) return null;
-  const multiplier = ACTIVITY_OPTIONS.find((o) => o.id === activity)?.multiplier ?? 1.8;
-  return `${Math.round(kg * multiplier)}g`;
-}
+import { useMeta } from '@/hooks/useMeta';
+import { ACTIVITY_OPTIONS } from '@/mocks/activityOptions';
 
 export function Meta() {
-  const [weight, setWeight] = useState('');
-  const [activityLevel, setActivityLevel] = useState<ActivityLevel>('moderado');
-
-  const proteinGoal = computeProtein(weight, activityLevel);
-  const selectedActivity = ACTIVITY_OPTIONS.find((o) => o.id === activityLevel)!;
-  const formulaLabel = weight
-    ? `${weight}kg x ${selectedActivity.multiplier}g/kg`
-    : '—';
+  const { weight, setWeight, activityLevel, setActivityLevel, proteinGoal, formulaLabel } = useMeta();
 
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
