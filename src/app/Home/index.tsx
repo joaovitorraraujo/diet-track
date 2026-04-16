@@ -15,11 +15,12 @@ import { styles } from './styles';
 import { colors } from '@/constants/colors';
 import type { MainTabParamList } from '@/routes';
 import { formatDate } from '@/util/formatDate';
-import { MEALS } from '@/mocks/meals';
 import { backgroundImage } from '@/assets';
+import { useHome } from '@/hooks/useHome';
 
 export function Home() {
   const navigation = useNavigation<BottomTabNavigationProp<MainTabParamList>>();
+  const { meals, handleToggle } = useHome();
 
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
@@ -47,7 +48,7 @@ export function Home() {
           <Text style={styles.sectionTitle}>Refeições de hoje</Text>
 
           <ScrollView showsVerticalScrollIndicator={false}>
-            {MEALS.map((meal) => (
+            {meals.map((meal) => (
               <TouchableOpacity
                 key={meal.id}
                 style={[
@@ -55,6 +56,7 @@ export function Home() {
                   meal.completed && styles.mealCardCompleted,
                 ]}
                 activeOpacity={0.8}
+                onPress={() => handleToggle(meal.id)}
               >
                 <MaterialCommunityIcons
                   name={meal.icon}

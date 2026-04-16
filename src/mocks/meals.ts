@@ -1,30 +1,6 @@
 export const MEALS = [
-  {
-    id: '1',
-    title: 'Café da manhã',
-    subtitle: '700 kcal • 7h30',
-    icon: 'weather-sunny' as const,
-    completed: true,
-  },
-  {
-    id: '2',
-    title: 'Almoço',
-    subtitle: '700 kcal',
-    icon: 'silverware-fork-knife' as const,
-    completed: false,
-  },
-  {
-    id: '3',
-    title: 'Lanche da tarde',
-    subtitle: '700 kcal',
-    icon: 'cup-outline' as const,
-    completed: false,
-  },
-  {
-    id: '4',
-    title: 'Jantar',
-    subtitle: '700 kcal',
-    icon: 'weather-night' as const,
-    completed: false,
-  },
+  { id: '1', title: 'Café da manhã', kcal: '700 kcal', icon: 'weather-sunny' as const },
+  { id: '2', title: 'Almoço', kcal: '700 kcal', icon: 'silverware-fork-knife' as const },
+  { id: '3', title: 'Lanche da tarde', kcal: '700 kcal', icon: 'cup-outline' as const },
+  { id: '4', title: 'Jantar', kcal: '700 kcal', icon: 'weather-night' as const },
 ];
