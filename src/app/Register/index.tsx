@@ -10,9 +10,7 @@ import { styles } from './styles';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import type { RootStackParamList } from '@/routes';
-
-const backgroundImage = require('@/assets/background-food.jpg');
-const logoImage = require('@/assets/diet-track-logo.png');
+import { backgroundImage, logoImage } from '@/assets';
 
 const registerSchema = z
   .object({

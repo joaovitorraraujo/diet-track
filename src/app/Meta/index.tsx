@@ -12,8 +12,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ScreenHeader } from '@/components/layout/ScreenHeader';
 import { colors } from '@/constants/colors';
 import { styles } from './styles';
-
-const backgroundImage = require('@/assets/background-food.jpg');
+import { backgroundImage } from '@/assets';
 
 type ActivityLevel = 'sedentario' | 'moderado' | 'intenso';
 

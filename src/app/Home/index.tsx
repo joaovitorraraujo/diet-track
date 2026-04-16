@@ -8,72 +8,19 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { ScreenHeader } from '@/components/layout/ScreenHeader';
 import { styles } from './styles';
 import { colors } from '@/constants/colors';
-
-const backgroundImage = require('@/assets/background-food.jpg');
-
-const MEALS = [
-  {
-    id: '1',
-    title: 'Café da manhã',
-    subtitle: '700 kcal • 7h30',
-    icon: 'weather-sunny' as const,
-    completed: true,
-  },
-  {
-    id: '2',
-    title: 'Almoço',
-    subtitle: '700 kcal',
-    icon: 'silverware-fork-knife' as const,
-    completed: false,
-  },
-  {
-    id: '3',
-    title: 'Lanche da tarde',
-    subtitle: '700 kcal',
-    icon: 'cup-outline' as const,
-    completed: false,
-  },
-  {
-    id: '4',
-    title: 'Jantar',
-    subtitle: '700 kcal',
-    icon: 'weather-night' as const,
-    completed: false,
-  },
-];
-
-function formatDate() {
-  const date = new Date();
-  const days = [
-    'Domingo',
-    'Segunda-feira',
-    'Terça-feira',
-    'Quarta-feira',
-    'Quinta-feira',
-    'Sexta-feira',
-    'Sábado',
-  ];
-  const months = [
-    'janeiro',
-    'fevereiro',
-    'março',
-    'abril',
-    'maio',
-    'junho',
-    'julho',
-    'agosto',
-    'setembro',
-    'outubro',
-    'novembro',
-    'dezembro',
-  ];
-  return `${days[date.getDay()]}, ${date.getDate()} de ${months[date.getMonth()]}`;
-}
+import type { MainTabParamList } from '@/routes';
+import { formatDate } from '@/util/formatDate';
+import { MEALS } from '@/mocks/meals';
+import { backgroundImage } from '@/assets';
 
 export function Home() {
+  const navigation = useNavigation<BottomTabNavigationProp<MainTabParamList>>();
+
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
       <StatusBar style="light" />
@@ -81,7 +28,7 @@ export function Home() {
       <SafeAreaView style={styles.safeArea} edges={['top']}>
         <ScreenHeader title="Minha Dieta" subtitle={formatDate()} />
 
-        <TouchableOpacity style={styles.goalCard} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.goalCard} activeOpacity={0.8} onPress={() => navigation.navigate('Meta')}>
           <View style={styles.goalCardIconContainer}>
             <MaterialCommunityIcons
               name="calculator"

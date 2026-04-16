@@ -7,8 +7,7 @@ import { AddMealModal } from '@/components/pages/Dieta/AddMealModal';
 import { ScreenHeader } from '@/components/layout/ScreenHeader';
 import type { MealItem } from '@/types/diet';
 import { styles } from './styles';
-
-const backgroundImage = require('@/assets/background-food.jpg');
+import { backgroundImage } from '@/assets';
 
 const MEALS = [
   { id: '1', title: 'Café da Manhã', icon: 'weather-sunny' as const },

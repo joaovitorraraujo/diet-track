@@ -1,7 +1,6 @@
 import { Image, Text, View } from 'react-native';
 import { styles } from './styles';
-
-const logoImage = require('@/assets/diet-track-logo.png');
+import { logoImage } from '@/assets';
 
 type ScreenHeaderProps = {
   title: string;

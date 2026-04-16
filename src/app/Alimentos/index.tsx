@@ -4,26 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AlimentoCard } from '@/components/pages/Alimentos/AlimentoCard';
-import type { Alimento } from '@/components/pages/Alimentos/AlimentoCard';
 import { ScreenHeader } from '@/components/layout/ScreenHeader';
 import { colors } from '@/constants/colors';
 import { styles } from './styles';
-
-const backgroundImage = require('@/assets/background-food.jpg');
-
-const ALIMENTOS: Alimento[] = [
-  { id: '1', nome: 'Frango (peito)', proteinaPor100g: 31, categoria: 'Carnes' },
-  { id: '2', nome: 'Carne bovina (patinho)', proteinaPor100g: 26, categoria: 'Carnes' },
-  { id: '3', nome: 'Peixe', proteinaPor100g: 26, categoria: 'Carnes' },
-  { id: '4', nome: 'Batata doce', proteinaPor100g: 2, categoria: 'Legumes' },
-  { id: '5', nome: 'Arroz', proteinaPor100g: 2, categoria: 'Grãos' },
-  { id: '6', nome: 'Feijão', proteinaPor100g: 2, categoria: 'Grãos' },
-  { id: '7', nome: 'Macarrão', proteinaPor100g: 2, categoria: 'Grãos' },
-  { id: '8', nome: 'Pão', proteinaPor100g: 2, categoria: 'Grãos' },
-  { id: '9', nome: 'Leite', proteinaPor100g: 2, categoria: 'Laticínios' },
-  { id: '10', nome: 'Queijo', proteinaPor100g: 2, categoria: 'Laticínios' },
-  { id: '11', nome: 'Iogurte', proteinaPor100g: 2, categoria: 'Laticínios' },
-];
+import { ALIMENTOS } from '@/mocks/alimentos';
+import { backgroundImage } from '@/assets';
 
 export function Alimentos() {
   const [search, setSearch] = useState('');
