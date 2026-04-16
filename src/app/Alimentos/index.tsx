@@ -3,9 +3,9 @@ import { FlatList, ImageBackground, LayoutAnimation, Text, TextInput, View } fro
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { AlimentoCard } from '@/components/AlimentoCard';
-import type { Alimento } from '@/components/AlimentoCard';
-import { ScreenHeader } from '@/components/ScreenHeader';
+import { AlimentoCard } from '@/components/pages/Alimentos/AlimentoCard';
+import type { Alimento } from '@/components/pages/Alimentos/AlimentoCard';
+import { ScreenHeader } from '@/components/layout/ScreenHeader';
 import { colors } from '@/constants/colors';
 import { styles } from './styles';
 

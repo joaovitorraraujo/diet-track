@@ -7,8 +7,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { styles } from './styles';
-import { Input } from '@/components/Input';
-import { Button } from '@/components/Button';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
 import type { RootStackParamList } from '@/routes';
 
 const backgroundImage = require('@/assets/background-food.jpg');

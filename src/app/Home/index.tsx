@@ -8,7 +8,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { ScreenHeader } from '@/components/ScreenHeader';
+import { ScreenHeader } from '@/components/layout/ScreenHeader';
 import { styles } from './styles';
 import { colors } from '@/constants/colors';
 

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Input } from '@/components/Input';
-import { Button } from '@/components/Button';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
 import type { MealItem } from '@/types/diet';
 import { styles } from './styles';
 

@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { ImageBackground, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
-import { MealPlanCard } from '@/components/MealPlanCard';
-import { AddMealModal } from '@/components/AddMealModal';
-import { ScreenHeader } from '@/components/ScreenHeader';
+import { MealPlanCard } from '@/components/pages/Dieta/MealPlanCard';
+import { AddMealModal } from '@/components/pages/Dieta/AddMealModal';
+import { ScreenHeader } from '@/components/layout/ScreenHeader';
 import type { MealItem } from '@/types/diet';
 import { styles } from './styles';
 

@@ -3,7 +3,7 @@ import { Home } from '@/app/Home';
 import { Meta } from '@/app/Meta';
 import { Alimentos } from '@/app/Alimentos';
 import { Dieta } from '@/app/Dieta';
-import { BottomNav } from '@/components/BottomNav';
+import { BottomNav } from '@/components/layout/BottomNav';
 import type { MainTabParamList } from './types';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
