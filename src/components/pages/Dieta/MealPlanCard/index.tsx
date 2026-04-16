@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Image, Text, TouchableOpacity, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '@/constants/colors';
 import type { MealItem } from '@/types/diet';
@@ -16,6 +16,8 @@ type MealPlanCardProps = {
   onAddCarb: () => void;
   onAddProtein: () => void;
   onDeleteItem: (id: string) => void;
+  photoUri?: string;
+  onPickPhoto?: () => void;
 };
 
 export function MealPlanCard({
@@ -27,6 +29,8 @@ export function MealPlanCard({
   onAddCarb,
   onAddProtein,
   onDeleteItem,
+  photoUri,
+  onPickPhoto,
 }: MealPlanCardProps) {
   const [expanded, setExpanded] = useState(false);
   const rotationAnim = useRef(new Animated.Value(0)).current;
@@ -53,7 +57,13 @@ export function MealPlanCard({
         onPress={() => hasItems && setExpanded((v) => !v)}
         activeOpacity={hasItems ? 0.7 : 1}
       >
-        <MaterialCommunityIcons name={icon} size={40} color={colors.primary} style={styles.icon} />
+        <TouchableOpacity onPress={onPickPhoto} activeOpacity={0.7}>
+          {photoUri ? (
+            <Image source={{ uri: photoUri }} style={styles.photo} />
+          ) : (
+            <MaterialCommunityIcons name={icon} size={40} color={colors.primary} style={styles.icon} />
+          )}
+        </TouchableOpacity>
         <View style={styles.content}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>

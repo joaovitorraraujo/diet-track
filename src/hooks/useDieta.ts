@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Alert } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 import type { MealItem } from '@/types/diet';
 
 export function useDieta() {
@@ -6,6 +8,7 @@ export function useDieta() {
   const [modalType, setModalType] = useState<'carb' | 'protein'>('carb');
   const [selectedMeal, setSelectedMeal] = useState<{ id: string; title: string } | null>(null);
   const [mealItems, setMealItems] = useState<Record<string, MealItem[]>>({});
+  const [mealPhotos, setMealPhotos] = useState<Record<string, string>>({});
 
   const allItems = Object.values(mealItems).flat();
   const totalKcal = allItems.reduce((s, i) => s + i.kcal, 0);
@@ -40,16 +43,46 @@ export function useDieta() {
     }));
   }
 
+  function handlePickPhoto(mealId: string) {
+    Alert.alert('Foto da refeição', 'Escolha uma opção', [
+      {
+        text: 'Câmera',
+        onPress: async () => {
+          const { status } = await ImagePicker.requestCameraPermissionsAsync();
+          if (status !== 'granted') return;
+          const result = await ImagePicker.launchCameraAsync({ quality: 0.7 });
+          if (!result.canceled) {
+            setMealPhotos((prev) => ({ ...prev, [mealId]: result.assets[0].uri }));
+          }
+        },
+      },
+      {
+        text: 'Galeria',
+        onPress: async () => {
+          const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+          if (status !== 'granted') return;
+          const result = await ImagePicker.launchImageLibraryAsync({ quality: 0.7 });
+          if (!result.canceled) {
+            setMealPhotos((prev) => ({ ...prev, [mealId]: result.assets[0].uri }));
+          }
+        },
+      },
+      { text: 'Cancelar', style: 'cancel' },
+    ]);
+  }
+
   return {
     modalVisible,
     modalType,
     selectedMeal,
     mealItems,
+    mealPhotos,
     totalKcal,
     totalProteina,
     handleOpenModal,
     handleCloseModal,
     handleConfirm,
     handleDeleteItem,
+    handlePickPhoto,
   };
 }

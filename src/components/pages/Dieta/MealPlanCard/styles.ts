@@ -21,6 +21,12 @@ export const styles = StyleSheet.create({
   icon: {
     marginRight: 16,
   },
+  photo: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    marginRight: 16,
+  },
   content: {
     flex: 1,
   },
