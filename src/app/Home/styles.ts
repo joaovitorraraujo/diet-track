@@ -77,6 +77,8 @@ export const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 16,
     elevation: 1,
+    borderWidth: 1,
+    borderColor: 'transparent',
   },
   mealCardCompleted: {
     backgroundColor: colors.primaryLight,
