@@ -24,6 +24,11 @@ export async function getSession() {
   return data.session;
 }
 
+export async function resetPassword(email: string): Promise<void> {
+  const { error } = await supabase.auth.resetPasswordForEmail(email);
+  if (error) throw new Error(error.message);
+}
+
 export async function signInWithGoogle(): Promise<void> {
   const redirectUri = 'diettrack://';
 

@@ -7,13 +7,29 @@ import { Controller } from 'react-hook-form';
 import { styles } from './styles';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
+import { ForgotPasswordModal } from '@/components/ui/ForgotPasswordModal';
 import type { RootStackParamList } from '@/routes';
 import { backgroundImage, logoImage } from '@/assets';
 import { useLogin } from '@/hooks/useLogin';
 
 export function Login() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { control, handleSubmit, errors, isLoading, isGoogleLoading, apiError, onSubmit, handleGoogleSignIn } = useLogin();
+  const {
+    control,
+    handleSubmit,
+    errors,
+    isLoading,
+    isGoogleLoading,
+    isForgotLoading,
+    isForgotModalOpen,
+    currentEmail,
+    apiError,
+    onSubmit,
+    handleGoogleSignIn,
+    openForgotModal,
+    closeForgotModal,
+    handleForgotPasswordSubmit,
+  } = useLogin();
 
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
@@ -77,7 +93,7 @@ export function Login() {
             disabled={isLoading}
           />
 
-          <TouchableOpacity style={styles.forgotButton} activeOpacity={0.7}>
+          <TouchableOpacity style={styles.forgotButton} activeOpacity={0.7} onPress={openForgotModal}>
             <Text style={styles.forgotText}>Esqueci minha senha</Text>
           </TouchableOpacity>
 
@@ -91,6 +107,14 @@ export function Login() {
           />
         </View>
       </SafeAreaView>
+
+      <ForgotPasswordModal
+        visible={isForgotModalOpen}
+        initialEmail={currentEmail}
+        isLoading={isForgotLoading}
+        onClose={closeForgotModal}
+        onSubmit={handleForgotPasswordSubmit}
+      />
     </ImageBackground>
   );
 }
