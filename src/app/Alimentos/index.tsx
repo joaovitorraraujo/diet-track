@@ -1,4 +1,4 @@
-import { FlatList, ImageBackground, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, FlatList, ImageBackground, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -10,7 +10,7 @@ import { backgroundImage } from '@/assets';
 import { useAlimentos } from '@/hooks/useAlimentos';
 
 export function Alimentos() {
-  const { search, setSearch, expandedId, filteredAlimentos, handleToggle } = useAlimentos();
+  const { search, setSearch, expandedId, alimentos, isLoading, error, handleToggle } = useAlimentos();
 
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
@@ -38,29 +38,36 @@ export function Alimentos() {
         </View>
 
         <View style={styles.mainCard}>
-          <FlatList
-            data={filteredAlimentos}
-            keyExtractor={(item) => item.id}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.listContent}
-            ListHeaderComponent={
-              filteredAlimentos.length > 0 ? (
-                <Text style={styles.categoryLabel}>
-                  {filteredAlimentos[0].categoria}
+          {isLoading ? (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <ActivityIndicator size="large" color={colors.primary} />
+              <Text style={{ marginTop: 12, color: colors.textMuted }}>Buscando alimentos...</Text>
+            </View>
+          ) : error ? (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <MaterialCommunityIcons name="alert-circle-outline" size={48} color={colors.error} />
+              <Text style={{ marginTop: 12, color: colors.error, textAlign: 'center' }}>{error}</Text>
+            </View>
+          ) : (
+            <FlatList
+              data={alimentos}
+              keyExtractor={(item) => item.id}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={styles.listContent}
+              renderItem={({ item }) => (
+                <AlimentoCard
+                  alimento={item}
+                  isExpanded={expandedId === item.id}
+                  onToggle={() => handleToggle(item.id)}
+                />
+              )}
+              ListEmptyComponent={
+                <Text style={styles.emptyText}>
+                  {search.trim() ? 'Nenhum alimento encontrado.' : 'Digite o nome de um alimento para buscar.'}
                 </Text>
-              ) : null
-            }
-            renderItem={({ item }) => (
-              <AlimentoCard
-                alimento={item}
-                isExpanded={expandedId === item.id}
-                onToggle={() => handleToggle(item.id)}
-              />
-            )}
-            ListEmptyComponent={
-              <Text style={styles.emptyText}>Nenhum alimento encontrado.</Text>
-            }
-          />
+              }
+            />
+          )}
         </View>
       </SafeAreaView>
     </ImageBackground>

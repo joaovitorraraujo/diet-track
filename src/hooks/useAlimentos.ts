@@ -1,16 +1,42 @@
-import { useMemo, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LayoutAnimation } from 'react-native';
-import { ALIMENTOS } from '@/mocks/alimentos';
+import { searchFoodsAPI } from '@/services/foodApi';
+import { useDebounce } from './useDebounce';
+import type { Alimento } from '@/types/alimento';
 
 export function useAlimentos() {
   const [search, setSearch] = useState('');
-  const [expandedId, setExpandedId] = useState<string | null>('1');
+  const debouncedSearch = useDebounce(search, 800); 
+  
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [alimentos, setAlimentos] = useState<Alimento[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredAlimentos = useMemo(() => {
-    if (!search.trim()) return ALIMENTOS;
-    const lower = search.toLowerCase();
-    return ALIMENTOS.filter((a) => a.nome.toLowerCase().includes(lower));
-  }, [search]);
+  useEffect(() => {
+    async function fetchFoods() {
+      if (!debouncedSearch.trim()) {
+        setAlimentos([]);
+        setError(null);
+        return;
+      }
+
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const results = await searchFoodsAPI(debouncedSearch);
+        setAlimentos(results);
+      } catch (err) {
+        setError('Não foi possível carregar os alimentos. Tente novamente mais tarde.');
+        setAlimentos([]);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchFoods();
+  }, [debouncedSearch]);
 
   function handleToggle(id: string) {
     LayoutAnimation.configureNext({
@@ -22,5 +48,5 @@ export function useAlimentos() {
     setExpandedId((prev) => (prev === id ? null : id));
   }
 
-  return { search, setSearch, expandedId, filteredAlimentos, handleToggle };
+  return { search, setSearch, expandedId, alimentos, isLoading, error, handleToggle };
 }

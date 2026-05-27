@@ -4,12 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '@/constants/colors';
 import { styles } from './styles';
 
-export type Alimento = {
-  id: string;
-  nome: string;
-  proteinaPor100g: number;
-  categoria: string;
-};
+import type { Alimento } from '@/types/alimento';
 
 type AlimentoCardProps = {
   alimento: Alimento;

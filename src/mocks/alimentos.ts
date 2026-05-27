@@ -1,4 +1,4 @@
-import type { Alimento } from '@/components/pages/Alimentos/AlimentoCard';
+import type { Alimento } from '@/types/alimento';
 export const ALIMENTOS: Alimento[] = [
   { id: '1', nome: 'Frango (peito)', proteinaPor100g: 31, categoria: 'Carnes' },
   { id: '2', nome: 'Carne bovina (patinho)', proteinaPor100g: 26, categoria: 'Carnes' },
