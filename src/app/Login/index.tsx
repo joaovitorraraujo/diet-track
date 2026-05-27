@@ -13,7 +13,7 @@ import { useLogin } from '@/hooks/useLogin';
 
 export function Login() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { control, handleSubmit, errors, isLoading, apiError, onSubmit } = useLogin();
+  const { control, handleSubmit, errors, isLoading, isGoogleLoading, apiError, onSubmit, handleGoogleSignIn } = useLogin();
 
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
@@ -83,7 +83,12 @@ export function Login() {
 
           <Text style={styles.orText}>Ou entre com</Text>
 
-          <Button title="Google" variant="google" />
+          <Button
+            title={isGoogleLoading ? 'Aguarde...' : 'Google'}
+            variant="google"
+            onPress={handleGoogleSignIn}
+            disabled={isGoogleLoading}
+          />
         </View>
       </SafeAreaView>
     </ImageBackground>

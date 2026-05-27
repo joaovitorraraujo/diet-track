@@ -34,4 +34,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
   },
+  logoutButton: {
+    padding: 6,
+    borderRadius: 20,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+  },
 });

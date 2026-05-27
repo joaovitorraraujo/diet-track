@@ -10,6 +10,7 @@ type AuthContextData = {
   signIn: (credentials: AuthCredentials) => Promise<void>;
   signUp: (credentials: AuthCredentials) => Promise<void>;
   signOut: () => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -45,8 +46,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await authService.signOut();
   }
 
+  async function signInWithGoogle() {
+    await authService.signInWithGoogle();
+  }
+
   return (
-    <AuthContext.Provider value={{ user, isLoading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ user, isLoading, signIn, signUp, signOut, signInWithGoogle }}>
       {children}
     </AuthContext.Provider>
   );

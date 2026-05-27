@@ -12,8 +12,9 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export function useLogin() {
-  const { signIn } = useAuth();
+  const { signIn, signInWithGoogle } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
   const {
@@ -30,7 +31,6 @@ export function useLogin() {
     setApiError(null);
     try {
       await signIn(data);
-      // A navegação ocorre automaticamente via onAuthStateChange no AuthContext
     } catch (err) {
       setApiError(err instanceof Error ? err.message : 'Erro ao fazer login');
     } finally {
@@ -38,5 +38,17 @@ export function useLogin() {
     }
   }
 
-  return { control, handleSubmit, errors, isLoading, apiError, onSubmit };
+  async function handleGoogleSignIn() {
+    setIsGoogleLoading(true);
+    setApiError(null);
+    try {
+      await signInWithGoogle();
+    } catch (err) {
+      setApiError(err instanceof Error ? err.message : 'Erro ao entrar com Google');
+    } finally {
+      setIsGoogleLoading(false);
+    }
+  }
+
+  return { control, handleSubmit, errors, isLoading, isGoogleLoading, apiError, onSubmit, handleGoogleSignIn };
 }

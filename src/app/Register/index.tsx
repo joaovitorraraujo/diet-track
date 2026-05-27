@@ -10,10 +10,12 @@ import { Button } from '@/components/ui/Button';
 import type { RootStackParamList } from '@/routes';
 import { backgroundImage, logoImage } from '@/assets';
 import { useRegister } from '@/hooks/useRegister';
+import { useLogin } from '@/hooks/useLogin';
 
 export function Register() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { control, handleSubmit, errors, isLoading, apiError, successMessage, onSubmit } = useRegister();
+  const { handleGoogleSignIn, isGoogleLoading } = useLogin();
 
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
@@ -95,7 +97,12 @@ export function Register() {
 
           <Text style={styles.orText}>Ou entre com</Text>
 
-          <Button title="Google" variant="google" />
+          <Button
+            title={isGoogleLoading ? 'Aguarde...' : 'Google'}
+            variant="google"
+            onPress={handleGoogleSignIn}
+            disabled={isGoogleLoading}
+          />
         </View>
       </SafeAreaView>
     </ImageBackground>
