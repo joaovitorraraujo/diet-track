@@ -1,5 +1,4 @@
 import * as WebBrowser from 'expo-web-browser';
-import { makeRedirectUri } from 'expo-auth-session';
 import { supabase } from '@/lib/supabase';
 import type { AuthCredentials } from '@/types/auth';
 
@@ -26,7 +25,7 @@ export async function getSession() {
 }
 
 export async function signInWithGoogle(): Promise<void> {
-  const redirectUri = makeRedirectUri({ scheme: 'diettrack' });
+  const redirectUri = 'diettrack://';
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
@@ -42,13 +41,21 @@ export async function signInWithGoogle(): Promise<void> {
   const result = await WebBrowser.openAuthSessionAsync(data.url, redirectUri);
 
   if (result.type === 'success' && result.url) {
-    const url = new URL(result.url);
-    const params = new URLSearchParams(url.hash.slice(1));
-    const accessToken = params.get('access_token');
-    const refreshToken = params.get('refresh_token');
+    const parsed = new URL(result.url);
+
+    const hashParams = new URLSearchParams(parsed.hash.slice(1));
+    const accessToken = hashParams.get('access_token');
+    const refreshToken = hashParams.get('refresh_token');
 
     if (accessToken && refreshToken) {
       await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+      return;
+    }
+
+    const code = parsed.searchParams.get('code');
+    if (code) {
+      await supabase.auth.exchangeCodeForSession(code);
     }
   }
 }
+
