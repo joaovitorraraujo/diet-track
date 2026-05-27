@@ -3,33 +3,17 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { Controller } from 'react-hook-form';
 import { styles } from './styles';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import type { RootStackParamList } from '@/routes';
 import { backgroundImage, logoImage } from '@/assets';
-
-const loginSchema = z.object({
-  email: z.string().min(1, 'Email obrigatório').email('Email inválido'),
-  password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres'),
-});
-
-type LoginFormData = z.infer<typeof loginSchema>;
+import { useLogin } from '@/hooks/useLogin';
 
 export function Login() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-  const { control, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: { email: '', password: '' },
-  });
-
-  function onSubmit(_data: LoginFormData) {
-    navigation.navigate('Main');
-  }
+  const { control, handleSubmit, errors, isLoading, apiError, onSubmit } = useLogin();
 
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
@@ -64,6 +48,7 @@ export function Login() {
                 value={value}
                 onChangeText={onChange}
                 error={errors.email?.message}
+                keyboardType="email-address"
               />
             )}
           />
@@ -83,7 +68,14 @@ export function Login() {
             )}
           />
 
-          <Button title="Entrar" variant="primary" onPress={handleSubmit(onSubmit)} />
+          {!!apiError && <Text style={styles.apiError}>{apiError}</Text>}
+
+          <Button
+            title={isLoading ? 'Entrando...' : 'Entrar'}
+            variant="primary"
+            onPress={handleSubmit(onSubmit)}
+            disabled={isLoading}
+          />
 
           <TouchableOpacity style={styles.forgotButton} activeOpacity={0.7}>
             <Text style={styles.forgotText}>Esqueci minha senha</Text>

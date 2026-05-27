@@ -3,39 +3,17 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { Controller } from 'react-hook-form';
 import { styles } from './styles';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import type { RootStackParamList } from '@/routes';
 import { backgroundImage, logoImage } from '@/assets';
-
-const registerSchema = z
-  .object({
-    email: z.string().min(1, 'Email obrigatório').email('Email inválido'),
-    password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres'),
-    confirmPassword: z.string().min(1, 'Confirme sua senha'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'As senhas não coincidem',
-    path: ['confirmPassword'],
-  });
-
-type RegisterFormData = z.infer<typeof registerSchema>;
+import { useRegister } from '@/hooks/useRegister';
 
 export function Register() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-  const { control, handleSubmit, formState: { errors } } = useForm<RegisterFormData>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: { email: '', password: '', confirmPassword: '' },
-  });
-
-  function onSubmit(_data: RegisterFormData) {
-    navigation.navigate('Main');
-  }
+  const { control, handleSubmit, errors, isLoading, apiError, successMessage, onSubmit } = useRegister();
 
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
@@ -70,6 +48,7 @@ export function Register() {
                 value={value}
                 onChangeText={onChange}
                 error={errors.email?.message}
+                keyboardType="email-address"
               />
             )}
           />
@@ -104,7 +83,15 @@ export function Register() {
             )}
           />
 
-          <Button title="Cadastrar" variant="primary" onPress={handleSubmit(onSubmit)} />
+          {!!apiError && <Text style={styles.apiError}>{apiError}</Text>}
+          {!!successMessage && <Text style={styles.successMessage}>{successMessage}</Text>}
+
+          <Button
+            title={isLoading ? 'Cadastrando...' : 'Cadastrar'}
+            variant="primary"
+            onPress={handleSubmit(onSubmit)}
+            disabled={isLoading}
+          />
 
           <Text style={styles.orText}>Ou entre com</Text>
 

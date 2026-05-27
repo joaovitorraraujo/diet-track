@@ -91,4 +91,14 @@ export const styles = StyleSheet.create({
     color: colors.textMuted,
     marginVertical: 16,
   },
+  apiError: {
+    color: colors.error,
+    fontSize: 13,
+    textAlign: 'center',
+    marginBottom: 8,
+    backgroundColor: colors.errorLight,
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
 });

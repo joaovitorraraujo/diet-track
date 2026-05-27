@@ -41,4 +41,7 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
     color: colors.textDark,
   },
+  disabled: {
+    opacity: 0.6,
+  },
 });
