@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { Alert } from 'react-native';
 import type { MealItem } from '@/types/diet';
 import { supabase } from '@/lib/supabase';
@@ -12,37 +13,39 @@ export function useDieta() {
   const [mealItems, setMealItems] = useState<Record<string, MealItem[]>>({});
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (!user) return;
+  useFocusEffect(
+    useCallback(() => {
+      if (!user) return;
 
-    async function loadItems() {
-      setIsLoading(true);
-      const { data, error } = await supabase
-        .from('user_diet_items')
-        .select('*')
-        .eq('user_id', user!.id);
+      async function loadItems() {
+        setIsLoading(true);
+        const { data, error } = await supabase
+          .from('user_diet_items')
+          .select('*')
+          .eq('user_id', user!.id);
 
-      if (error) {
-        Alert.alert('Erro', 'Não foi possível carregar o plano alimentar.');
-      } else if (data) {
-        const grouped: Record<string, MealItem[]> = {};
-        data.forEach((item) => {
-          if (!grouped[item.meal_id]) grouped[item.meal_id] = [];
-          grouped[item.meal_id].push({
-            id: item.id,
-            alimento: item.alimento,
-            gramas: item.gramas,
-            kcal: item.kcal,
-            proteina: item.proteina ?? undefined,
+        if (error) {
+          Alert.alert('Erro', 'Não foi possível carregar o plano alimentar.');
+        } else if (data) {
+          const grouped: Record<string, MealItem[]> = {};
+          data.forEach((item) => {
+            if (!grouped[item.meal_id]) grouped[item.meal_id] = [];
+            grouped[item.meal_id].push({
+              id: item.id,
+              alimento: item.alimento,
+              gramas: item.gramas,
+              kcal: item.kcal,
+              proteina: item.proteina ?? undefined,
+            });
           });
-        });
-        setMealItems(grouped);
+          setMealItems(grouped);
+        }
+        setIsLoading(false);
       }
-      setIsLoading(false);
-    }
 
-    loadItems();
-  }, [user]);
+      loadItems();
+    }, [user])
+  );
 
   const allItems = Object.values(mealItems).flat();
   const totalKcal = allItems.reduce((s, i) => s + i.kcal, 0);

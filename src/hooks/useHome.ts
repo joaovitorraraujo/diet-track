@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { MEALS } from '@/mocks/meals';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/contexts/AuthContext';
@@ -9,45 +10,47 @@ export function useHome() {
   const [mealKcalTotals, setMealKcalTotals] = useState<Record<string, number>>({});
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (!user) return;
+  useFocusEffect(
+    useCallback(() => {
+      if (!user) return;
 
-    async function loadHomeData() {
-      setIsLoading(true);
-      const today = new Date().toISOString().split('T')[0];
+      async function loadHomeData() {
+        setIsLoading(true);
+        const today = new Date().toISOString().split('T')[0];
 
-      const { data: completionsData } = await supabase
-        .from('user_daily_completions')
-        .select('*')
-        .eq('user_id', user!.id)
-        .eq('date', today);
+        const { data: completionsData } = await supabase
+          .from('user_daily_completions')
+          .select('*')
+          .eq('user_id', user!.id)
+          .eq('date', today);
 
-      if (completionsData) {
-        const compMap: Record<string, string> = {};
-        completionsData.forEach(c => {
-          compMap[c.meal_id] = c.completed_time;
-        });
-        setCompletions(compMap);
+        if (completionsData) {
+          const compMap: Record<string, string> = {};
+          completionsData.forEach(c => {
+            compMap[c.meal_id] = c.completed_time;
+          });
+          setCompletions(compMap);
+        }
+
+        const { data: dietItems } = await supabase
+          .from('user_diet_items')
+          .select('meal_id, kcal')
+          .eq('user_id', user!.id);
+
+        if (dietItems) {
+          const kcalMap: Record<string, number> = {};
+          dietItems.forEach(item => {
+            kcalMap[item.meal_id] = (kcalMap[item.meal_id] || 0) + item.kcal;
+          });
+          setMealKcalTotals(kcalMap);
+        }
+
+        setIsLoading(false);
       }
 
-      const { data: dietItems } = await supabase
-        .from('user_diet_items')
-        .select('meal_id, kcal')
-        .eq('user_id', user!.id);
-
-      if (dietItems) {
-        const kcalMap: Record<string, number> = {};
-        dietItems.forEach(item => {
-          kcalMap[item.meal_id] = (kcalMap[item.meal_id] || 0) + item.kcal;
-        });
-        setMealKcalTotals(kcalMap);
-      }
-
-      setIsLoading(false);
-    }
-
-    loadHomeData();
-  }, [user]);
+      loadHomeData();
+    }, [user])
+  );
 
   async function handleToggle(id: string) {
     if (!user) return;
