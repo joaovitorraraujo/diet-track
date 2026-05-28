@@ -15,14 +15,12 @@ export function Dieta() {
     modalType,
     selectedMeal,
     mealItems,
-    mealPhotos,
     totalKcal,
     totalProteina,
     handleOpenModal,
     handleCloseModal,
     handleConfirm,
     handleDeleteItem,
-    handlePickPhoto,
   } = useDieta();
 
   return (
@@ -61,8 +59,6 @@ export function Dieta() {
                   onAddCarb={() => handleOpenModal(meal, 'carb')}
                   onAddProtein={() => handleOpenModal(meal, 'protein')}
                   onDeleteItem={(itemId) => handleDeleteItem(meal.id, itemId)}
-                  photoUri={mealPhotos[meal.id]}
-                  onPickPhoto={() => handlePickPhoto(meal.id)}
                 />
               );
             })}

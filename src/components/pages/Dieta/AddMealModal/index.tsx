@@ -11,7 +11,7 @@ type AddMealModalProps = {
   mealTitle: string;
   type: 'carb' | 'protein';
   onClose: () => void;
-  onConfirm: (item: MealItem) => void;
+  onConfirm: (item: Omit<MealItem, 'id'>) => void;
 };
 
 function handleNumericChange(text: string, setter: (v: string) => void, max = 1000) {
@@ -34,8 +34,7 @@ export function AddMealModal({ visible, mealTitle, type, onClose, onConfirm }: A
   }
 
   function handleConfirm() {
-    const item: MealItem = {
-      id: '',
+    const item: Omit<MealItem, 'id'> = {
       alimento,
       gramas,
       kcal: Number(kcal),
